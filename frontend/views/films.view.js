@@ -19,10 +19,12 @@ class FilmsView {
 
         this.submitButton = this.createElement('button');
         this.submitButton.textContent = 'Añadir película';
+        this.submitButton.type = "submit";
 
         this.form.append(this.name, this.yearOfProduction, this.submitButton);
 
         this.filmList = this.createElement('div');
+        this.app.append(this.filmList, this.form);
     }
 
     get nameInputText() {

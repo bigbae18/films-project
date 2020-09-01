@@ -2,14 +2,14 @@ class FilmsService {
 
     constructor() {
         this.APIurl = "http://localhost/films-project/backend/api/films/";
-        let films = [];
-        $.get(this.APIurl + 'read.php', (data, status) => { 
+        this.films = $.get(this.APIurl + 'read.php', (data, status) => { 
             if (status === 404) {
                 return `No se ha encontrado la página solicitada`
             }
-            films = data
+            this.films = data.films
+        }).done(() => {
+            this.films.map(film => new Films(film))
         });
-        this.films = films.map(film => new Films(film));
     }
     postFilm(film) {
         $.post(this.APIurl + 'create.php', film, (data, status) => {
