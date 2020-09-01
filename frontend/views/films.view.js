@@ -1,4 +1,4 @@
-export default class FilmView {
+class FilmsView {
     constructor() {
         this.app = document.querySelector('#root');
 
@@ -25,6 +25,17 @@ export default class FilmView {
         this.filmList = this.createElement('div');
     }
 
+    get nameInputText() {
+        return this.name.value
+    }
+    get yearOfProductionInputText() {
+        return this.yearOfProduction.value
+    }
+    resetInputs() {
+        this.name.value = '';
+        this.yearOfProduction.value = '';
+    }
+
     createElement(selector) {
         const element = document.createElement(selector);
         return element
@@ -35,6 +46,25 @@ export default class FilmView {
         this[key].type = type;
         this[key].placeholder = placeholder;
         this[key].name = name;
+    }
+
+    bindAddFilm(handler) {
+        this.form.addEventListener('submit', event => {
+            event.preventDefault();
+            if ((this.nameInputText) && (this.yearOfProductionInputText)) {
+                handler({
+                    name: this.nameInputText,
+                    yearOfProduction: this.yearOfProductionInputText
+                });
+            }
+        })
+    }
+    bindDeleteFilm(handler) {
+        this.filmList.addEventListener('click', event => {
+            if (event.target.className === 'delete') {
+                handler(event.target.parentElement.id);
+            }
+        })
     }
 
     displayFilms(films) {
@@ -54,9 +84,14 @@ export default class FilmView {
                 filmTitle.textContent = film.name;
                 const filmYear = this.createElement('small');
                 filmYear.textContent = film.yearOfProduction;
+                const deleteButton = this.createElemenet('button');
+                deleteButton.textContent = 'Delete';
+                deleteButton.className = 'delete';
                 filmTitle.append(filmYear);
-                filmDiv.append(filmTitle);
-            })
+                filmDiv.append(filmTitle, deleteButton);
+                this.filmList.append(filmDiv);
+            });
         }
+        
     }
 }
