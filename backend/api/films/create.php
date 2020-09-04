@@ -1,9 +1,8 @@
 <?php
 
-header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json');
+include_once '../cors.php';
+
 header('Access-Control-Allow-Methods: POST');
-header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization, X-Request-With');
 
 include_once '../../db/Database.php';
 include_once '../../models/Films.php';
@@ -16,7 +15,7 @@ $film = new Films($db);
 $data = json_decode(file_get_contents('php://input'));
 
 $film->name = $data->name;
-$film->year_of_production = $data->year_of_production;
+$film->year_of_production = $data->yearOfProduction;
 
 if ($film->create()) {
     echo json_encode(

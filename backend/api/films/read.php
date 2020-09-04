@@ -1,7 +1,8 @@
 <?php
 
-header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json');
+include_once '../cors.php';
+
+header('Access-Control-Allow-Methods: GET');
 
 include_once '../../db/Database.php';
 include_once '../../models/Films.php';
@@ -27,11 +28,8 @@ while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
     $film = array(
         'id' => $id,
         'name' => $name,
-        'year_of_production' => $year_of_production
+        'yearOfProduction' => $year_of_production
     );
     array_push($films_array['films'], $film);
 }
-
 echo json_encode($films_array);
-
-

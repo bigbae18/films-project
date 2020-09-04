@@ -1,9 +1,8 @@
 <?php
 
-header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json');
+include_once '../cors.php';
+
 header('Access-Control-Allow-Methods: DELETE');
-header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization, X-Request-With');
 
 include_once '../../db/Database.php';
 include_once '../../models/Films.php';

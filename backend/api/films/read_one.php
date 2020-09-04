@@ -18,7 +18,7 @@ $film->read_one();
 $film_array = array(
     'id' => $film->id,
     'name' => $film->name,
-    'year_of_production' => $film->year_of_production
+    'yearOfProduction' => $film->year_of_production
 );
 
 echo json_encode($film_array);
