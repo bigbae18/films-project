@@ -31,7 +31,8 @@
 .add-film {
     text-align:center;
 }
-.buttons {
+.buttons, .inputs {
     display:flex;
     justify-content:space-between;
+    margin-top: 5px;
 }

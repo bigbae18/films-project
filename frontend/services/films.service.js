@@ -44,7 +44,21 @@ class FilmsService {
         }
     }
     async addFilm(film) {
-        try {} catch(e) {
+        try {
+            const data = {
+                name: film.name,
+                yearOfProduction: film.yearOfProduction
+            };
+            let res = await fetch(APIurl + 'create.php', {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+            res = await res.json();
+            this.getFilms();
+        } catch(e) {
             console.error(e)
         }
     }
@@ -80,18 +94,14 @@ class FilmsService {
     filterByAscendent() {
         if (this.filters.ascendent === true) {
             this.filters.ascendent = false;
-            this.refreshFilms((typeof(this.filteredFilms) !== undefined) ? this.filteredFilms : this.films);
+            this.refreshFilms((this.filteredFilms !== undefined) ? this.filteredFilms : this.films);
             return
         }
-        
-
-        let currentFilms = (typeof(this.filteredFilms) !== undefined) 
-            ? this.filteredFilms.map(film => ({
+        let currentFilms = (this.filteredFilms !== undefined) ? this.filteredFilms.map(film => ({
                 id: film.id,
                 name: film.name,
                 yearOfProduction: film.yearOfProduction
-            }))
-            : this.films.map(film => ({
+            })) : this.films.map(film => ({
                 id: film.id, 
                 name: film.name,
                 yearOfProduction: film.yearOfProduction
@@ -110,16 +120,15 @@ class FilmsService {
     filterByDescendent() {
         if (this.filters.descendent === true) {
             this.filters.descendent = false;
-            this.refreshFilms((typeof(this.filteredFilms) !== undefined) ? this.filteredFilms : this.films);
+            this.refreshFilms((this.filteredFilms !== undefined) ? this.filteredFilms : this.films);
             return
         }
-        let currentFilms = (typeof(this.filteredFilms) !== undefined) 
-            ? this.filteredFilms.map(film => ({
+        
+        let currentFilms = (this.filteredFilms !== undefined) ? this.filteredFilms.map(film => ({
                 id: film.id,
                 name: film.name,
                 yearOfProduction: film.yearOfProduction
-            }))
-            : this.films.map(film => ({
+            })) : this.films.map(film => ({
                 id: film.id, 
                 name: film.name,
                 yearOfProduction: film.yearOfProduction

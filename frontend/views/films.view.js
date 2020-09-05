@@ -7,6 +7,8 @@ class FilmsView {
 
         this.addFilmForm = this.createElement('form', 'add-film');
         this.addFilmForm.hidden = true;
+
+        this.errorFormParagraph = this.createElement('p', 'errors');
         
         this.formTitle = this.createElement('h4');
         this.formTitle.textContent = 'Añadir película';
@@ -28,7 +30,6 @@ class FilmsView {
             name: 'yearOfProduction',
             required: true
         });
-        this.yearOfProduction.pattern = "^[1-9]\d*$"
         this.inputsDiv.append(this.name, this.yearOfProduction);
 
         this.hideButton = this.createElement('button', 'btn btn-secondary');
@@ -112,17 +113,25 @@ class FilmsView {
     bindAddFilm(handler) {
         this.addFilmForm.addEventListener('submit', event => {
             event.preventDefault();
-            if ((this.nameInputText) && (this.yearOfProductionInputText)) {
-                handler({
-                    name: this.nameInputText,
-                    yearOfProduction: this.yearOfProductionInputText
-                });
+            this.errorFormParagraph.remove();
+            let nameValid = this.nameInputText.match(/^\b[A-Z]\w[A-Za-z]*$/g);
+            let yearValid = this.yearOfProductionInputText.match(/^\b(19|20)\d{2}$/g);
+            console.log(yearValid);
+            if (nameValid === null || yearValid === null) {
+                this.errorFormParagraph.textContent = 'Los datos introducidos no están bien escritos'
+                this.addFilmForm.prepend(this.errorFormParagraph);
+                return
             }
+            handler({
+                name: this.nameInputText,
+                yearOfProduction: this.yearOfProductionInputText
+            });
         })
     }
+
     bindDeleteFilm(handler) {
         this.filmList.addEventListener('click', event => {
-            if (event.target.className === 'delete') {
+            if (event.target.id === 'delete') {
                 if (!confirm('¿Está seguro que desea eliminar la película?')) {
                     return
                 }
@@ -183,8 +192,9 @@ class FilmsView {
                 filmTitle.textContent = film.name;
                 const filmYear = this.createElement('p');
                 filmYear.textContent = `Año de producción: ${film.yearOfProduction}`;
-                const deleteButton = this.createElement('button', 'btn btn-danger delete');
+                const deleteButton = this.createElement('button', 'btn btn-danger');
                 deleteButton.textContent = 'Borrar';
+                deleteButton.id = 'delete';
                 filmDiv.append(filmTitle, filmYear, deleteButton);
                 this.filmList.append(filmDiv);
             });
