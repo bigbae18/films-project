@@ -5,15 +5,15 @@ class FilmsView {
         this.formDiv = this.selectElement('#form-div')
         this.filterParagraph = this.selectElement('.filter-p');
 
-        this.addFilmForm = this.createElement('form', 'add-film');
+        this.addFilmForm = this.createElement('form', 'mb-3 card p-3 add-film');
         this.addFilmForm.hidden = true;
 
         this.errorFormParagraph = this.createElement('p', 'errors');
         
-        this.formTitle = this.createElement('h4');
+        this.formTitle = this.createElement('h4', 'card-title mb-3');
         this.formTitle.textContent = 'Añadir película';
 
-        this.inputsDiv = this.createElement('div', 'inputs');
+        this.inputsDiv = this.createElement('div', 'card-text mb-2');
         this.buttonDiv = this.createElement('div', 'buttons');
 
         this.createInput({
@@ -65,8 +65,7 @@ class FilmsView {
 
         this.filterParagraph.append(this.ascendentFilmsFilterButton, ' - ', this.descendentFilmsFilterButton);
 
-        this.filmList = this.createElement('div');
-        this.filmList.className = 'row';
+        this.filmList = this.createElement('div', 'row');
 
         this.app.append(this.filmList);
 
@@ -118,7 +117,7 @@ class FilmsView {
             let yearValid = this.yearOfProductionInputText.match(/^\b(19|20)\d{2}$/g);
             console.log(yearValid);
             if (nameValid === null || yearValid === null) {
-                this.errorFormParagraph.textContent = 'Los datos introducidos no están bien escritos'
+                this.errorFormParagraph.textContent = 'Los datos introducidos no son válidos'
                 this.addFilmForm.prepend(this.errorFormParagraph);
                 return
             }
@@ -185,12 +184,11 @@ class FilmsView {
             this.filmList.append(h2);
         } else {
             films.forEach(film => {
-                const filmDiv = this.createElement('div');
+                const filmDiv = this.createElement('div', 'col-xs-12 col-s-6 col-md-3 mb-2 card text-center filmBox');
                 filmDiv.id = film.id;
-                filmDiv.className = 'col-xs-6 col-s-4 col-md-3 filmBox';
-                const filmTitle = this.createElement('h3');
+                const filmTitle = this.createElement('h4', 'mt-3 card-title');
                 filmTitle.textContent = film.name;
-                const filmYear = this.createElement('p');
+                const filmYear = this.createElement('p', 'mt-4 card-text');
                 filmYear.textContent = `Año de producción: ${film.yearOfProduction}`;
                 const deleteButton = this.createElement('button', 'btn btn-danger');
                 deleteButton.textContent = 'Borrar';

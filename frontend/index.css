@@ -5,6 +5,16 @@
     padding: 5vmin;
     height: 100px;
 }
+h4 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400
+}
+p {
+    font-family: 'Roboto', sans-serif;
+}
+.header > h1 {
+    font-family: 'Dancing Script', cursive
+}
 .header > input {
     width: 50%;
     text-align:center;
@@ -22,8 +32,12 @@
     color: blueviolet;
 }
 .filmBox {
-    text-align:center;
+    align-items:center;
     padding: 1%;
+}
+.filmBox > p {
+    font-weight: 100;
+    font-style: italic;
 }
 .form-div {
     justify-content:space-between;
@@ -33,6 +47,6 @@
 }
 .buttons, .inputs {
     display:flex;
-    justify-content:space-between;
+    justify-content:space-evenly;
     margin-top: 5px;
 }
