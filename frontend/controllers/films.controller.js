@@ -7,6 +7,8 @@ class FilmsController {
         this.filmsService.bindFilmsListChanged(this.onFilmListChanged);
         this.filmsView.bindAddFilm(this.handleAddFilm);
         this.filmsView.bindDeleteFilm(this.handleDeleteFilm);
+        this.filmsView.bindShowAddFilmForm(this.handleShowHideForm);
+        this.filmsView.bindHideAddFilmForm(this.handleShowHideForm);
         this.filmsView.bindSearchBar(this.handleSearchBarText);
         this.filmsView.bindFilterFilmAscendent(this.handleAscendentFilter);
         this.filmsView.bindFilterFilmDescendent(this.handleDescendentFilter);
@@ -14,6 +16,9 @@ class FilmsController {
 
     onFilmListChanged = films => {
         this.filmsView.displayFilms(films);
+    }
+    handleShowHideForm = () => {
+        this.filmsView.displayAddFilmForm();
     }
 
     handleAddFilm = film => {

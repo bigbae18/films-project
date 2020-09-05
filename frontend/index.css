@@ -25,6 +25,13 @@
     text-align:center;
     padding: 1%;
 }
-.app {
-    margin: 2%;
+.form-div {
+    justify-content:space-between;
+}
+.add-film {
+    text-align:center;
+}
+.buttons {
+    display:flex;
+    justify-content:space-between;
 }

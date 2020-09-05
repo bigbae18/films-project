@@ -9,7 +9,6 @@ class FilmsService {
             ascendent: false,
             descendent: false
         };
-        this.showingForm = false;
     }
 
     async getFilms() {

@@ -1,11 +1,18 @@
 class FilmsView {
     constructor() {
-
         this.app = this.selectElement('#root');
         this.header = this.selectElement('#header');
+        this.formDiv = this.selectElement('#form-div')
         this.filterParagraph = this.selectElement('.filter-p');
 
-        this.form = this.createElement('form');
+        this.addFilmForm = this.createElement('form', 'add-film');
+        this.addFilmForm.hidden = true;
+        
+        this.formTitle = this.createElement('h4');
+        this.formTitle.textContent = 'Añadir película';
+
+        this.inputsDiv = this.createElement('div', 'inputs');
+        this.buttonDiv = this.createElement('div', 'buttons');
 
         this.createInput({
             key: 'name',
@@ -16,26 +23,23 @@ class FilmsView {
         });
         this.createInput({
             key: 'yearOfProduction',
-            type: 'number',
+            type: 'text',
             placeholder: 'Año de producción',
             name: 'yearOfProduction',
             required: true
-        })
-
-        
-        this.buttonFormDiv = this.createElement('div');
-        this.hideButton = this.createElement('button', 'btn btn-secondary');
-        this.hideButton.textContent = 'hide';
-        this.submitButton = this.createElement('button', 'btn btn-success');
-        this.submitButton.textContent = 'Añadir película';
-
-        this.buttonFormDiv.append(this.hideButton, this.submitButton);
-
+        });
         this.yearOfProduction.pattern = "^[1-9]\d*$"
+        this.inputsDiv.append(this.name, this.yearOfProduction);
 
-        this.form.className = 'row';
+        this.hideButton = this.createElement('button', 'btn btn-secondary');
+        this.hideButton.textContent = 'Cerrar';
+
+        this.addButton = this.createElement('button', 'btn btn-success');
+        this.addButton.textContent = 'Añadir película';
+        this.addButton.type = "submit";  
         
-        this.form.append(this.name, this.yearOfProduction, this.buttonFormDiv);
+        this.buttonDiv.append(this.hideButton, this.addButton);
+        this.addFilmForm.append(this.formTitle, this.inputsDiv, this.buttonDiv);
 
         this.createInput({
             key: 'searchBar',
@@ -64,6 +68,8 @@ class FilmsView {
         this.filmList.className = 'row';
 
         this.app.append(this.filmList);
+
+        this.hideButton
     }
 
     get nameInputText() {
@@ -104,7 +110,7 @@ class FilmsView {
     }
 
     bindAddFilm(handler) {
-        this.form.addEventListener('submit', event => {
+        this.addFilmForm.addEventListener('submit', event => {
             event.preventDefault();
             if ((this.nameInputText) && (this.yearOfProductionInputText)) {
                 handler({
@@ -124,11 +130,16 @@ class FilmsView {
             }
         })
     }
+    bindHideAddFilmForm(handler) {
+        this.hideButton.addEventListener('click', event => {
+            event.preventDefault();
+            handler();
+        })
+    }
     bindShowAddFilmForm(handler) {
         this.showAddFilmFormButton.addEventListener('click', event => {
-            if (event.target.firstChild.className === 'fas fa-plus-circle') {
-
-            }
+            event.preventDefault();
+            handler();
         })
     }
     bindFilterFilmAscendent(handler) {
@@ -178,6 +189,14 @@ class FilmsView {
                 this.filmList.append(filmDiv);
             });
         }
-        
+    }
+    displayAddFilmForm() {
+        if (this.addFilmForm.hidden == false) {
+            this.addFilmForm.remove();
+            this.addFilmForm.hidden = true
+            return
+        }
+        this.formDiv.append(this.addFilmForm);
+        this.addFilmForm.hidden = false;
     }
 }
